@@ -1,0 +1,16 @@
+function insertFunc() {
+	// 상대경로 이므로 './insertOk'임
+	$.ajax({
+		url: "./insertOk",
+		type: "POST",
+		data:  {"id": $("#id").val(), "title": $("#title").val() ,"contents": $("#contents").val()},
+		success: function() {
+			alert("저장이 완료되었습니다.");
+			// 메인 페이지로 이동
+			location.href="/main";
+		},
+		error: function() {
+			alert("error");
+		}
+	});
+}

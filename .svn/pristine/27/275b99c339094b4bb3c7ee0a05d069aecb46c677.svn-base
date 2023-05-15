@@ -1,0 +1,24 @@
+# server
+server.port=8083
+
+# view
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+#JSP\uC218\uC815\uC2DC \uC11C\uBC84 \uC7AC\uC2DC\uC791\uC5C6\uC774 \uBC14\uB85C \uC801\uC6A9\uB420 \uC218 \uC788\uAC8C \uC124\uC815
+server.servlet.jsp.init-parameters.development=true
+
+# jdbc
+#spring.datasource.driver-class-name=net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+spring.datasource.driver-class-name=net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+spring.datasource.url=jdbc:log4jdbc:oracle:thin:@192.168.0.64:1521:xe
+spring.datasource.username=system
+spring.datasource.password=1234
+
+
+# mybatis
+mybatis.type-aliases-package= com.board.dao
+mybatis.mapper-locations=mapper/*.xml
+
+# JDBC null settings
+#mybatis.configuration.jdbc-type-for-null=null

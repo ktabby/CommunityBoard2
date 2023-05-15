@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberInfoDao">
+
+
+	<select id="memberInfoDetail" resultType="com.board.vo.MemberInfoVo" parameterType="Integer">
+		/*memberDao.memberInfoDetail*/
+		
+		SELECT
+			SEQ_MEMBER
+			, ID
+			, NAME
+			, PASSWORD
+			, to_char(REG_DATE, 'yyyy-mm-dd') as REG_DATE
+			, to_char(MOD_DATE, 'yyyy-mm-dd') as MOD_DATE
+			, EMAIL
+			, ADDRESS
+		FROM YOUTUBE_JJH.MEMBER_INFO
+		WHERE SEQ_MEMBER = #{seqMember}
+	
+	
+	</select> 
+	
+	<insert id="memberInsertInfo" parameterType="map">
+	/*memberDao.memberInsertInfo*/
+		INSERT INTO YOUTUBE_JJH.MEMBER_INFO(
+			SEQ_MEMBER
+			,ID
+			,NAME
+			,PASSWORD
+			,EMAIL
+			,ADDRESS
+			,REG_DATE
+			,MOD_DATE
+		)VALUES(
+			YOUTUBE_JJH.seq_member.NEXTVAL
+			,#{id}
+			,#{name}
+			,#{password}
+			,#{email}
+			,#{address}
+			,SYSDATE
+			,SYSDATE
+		)
+	</insert>
+	
+	<update id="memberUpdateInfo" parameterType="com.board.vo.MemberInfoVo">
+	/*memberDao.memberUpdateMapper*/
+		UPDATE YOUTUBE_JJH.MEMBER_INFO
+		SET 
+			NAME = #{name}
+			, ID = #{id}
+			, PASSWORD =#{password}
+			, EMAIL = #{email}
+			, ADDRESS = #{address}
+			, MOD_DATE = SYSDATE 
+		WHERE 
+			SEQ_MEMBER = #{seqMember}
+	</update>
+	
+	<delete id="memberInfoDelete" parameterType="Integer">
+		/*memberDao.memberDeleteMapper*/
+		DELETE
+		FROM
+			YOUTUBE_JJH.MEMBER_INFO
+		WHERE
+			SEQ_MEMBER = #{seqMember}
+	</delete>
+
+	
+	
+</mapper>

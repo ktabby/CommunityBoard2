@@ -1,0 +1,98 @@
+$(document).ready(function () {
+	$("#insertBtn").click(function(){
+		var id = $("#id").val();
+		var title = $("#title").val();
+		var contents = $("#contents").val();
+		/*
+		alert('등록 이벤트');*/
+		
+		//$('#registerBtn').attr('type','submit');
+		if(id.trim() == '') {
+			alert('id를 입력해 주세요');
+			return;
+		} else if(id.trim().length > 10) {
+				alert("아이디는 최대 10자까지 입력 가능합니다.");
+				$("#id").val('');
+				$("#id").focus();
+				return;
+		} else if(title.trim() == '') {
+			alert('제목를 입력해 주세요');
+			return;
+		} else if(title.trim().length > 30) {
+				alert("제목은 최대 30자까지 입력 가능합니다.");
+				$("#title").val('');
+				$("#title").focus();
+				return;
+		} else if(contents.length > 150) {
+				alert("내용은 최대 50자까지 입력 가능합니다.");
+				$("#contents").focus();
+				return;
+		}
+		//document.querySelector('#insertBtn').setAttribute('type','submit');
+		$("#insertFrm").submit();
+	});
+
+	$("#updateBtn").click(function(){
+		var title = $("#title").val();
+		var contents = $("#contents").val();
+		
+		if(title.trim() == '') {
+			alert('제목를 입력해 주세요');
+			return;
+		} else if(title.trim().length > 30) {
+				alert("제목은 최대 30자까지 입력 가능합니다.");
+				$("#title").val('');
+				$("#title").focus();
+				return;
+		} else if(contents.length > 150) {
+				alert("내용은 최대 50자까지 입력 가능합니다.");
+				$("#contents").focus();
+				return;
+		}
+		var update = confirm("수정하시겠습니까?");
+		if(update == true) {
+			$("#updateFrm").submit();
+		} else {
+			return;
+		}
+	});
+	
+	$("#delBtn").click(function(){
+		var deleteBtn = confirm("삭제하시겠습니까?");
+		if(deleteBtn == true) {
+			$("#deleteOk").submit();
+			/*location.href="/getBoardList";*/
+		} else {
+			return;
+		}
+	});
+});
+
+/*function deleteFunc() {
+	var deleteBtn = confirm("삭제하시겠습니까?");
+	if(deleteBtn == true) {
+		$("#delete").submit();
+		location.href="/getBoardList";
+	} else {
+		return;
+	}
+}
+*/
+function regBtn() {
+   location.href="/setBoardInsert";
+}
+
+function loginBtn() { 
+	location.href="/login";
+}
+
+function goDetail(SEQ_BOARD) {
+	location.href="/getBoardDetail?seqBoard=" + SEQ_BOARD;
+}
+function goMemDetail(seqMemIdx){   
+	location.href="/getMemberDetail?seqMemIdx=" + seqMemIdx;
+}
+
+function goUpdate(seqBoard) {
+	location.href="/setBoardUpdate?seqBoard=" + seqBoard;
+}

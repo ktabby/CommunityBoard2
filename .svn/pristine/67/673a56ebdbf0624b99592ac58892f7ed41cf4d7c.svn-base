@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardInfoDao">
+	<select id="getReadBoardInfo" resultType="Map">
+		/*boardDao.BoardList.박혁진*/
+		SELECT
+			 * 
+		FROM 
+			YOUTUBE_JJH.BOARD_INFO 
+	</select>
+
+	<insert id="boardInsert" parameterType="int">
+		/*boardDao.insertBoardInfo*/
+		INSERT INTO YOUTUBE_JJH.BOARD_INFO(
+			SEQ_BOARD
+			,ID
+			,TITLE
+			,CONTENTS
+			,REG_DATE
+		)VALUES(
+			YOUTUBE_JJH.seq_board.NEXTVAL
+			,#{id}
+			,#{title}
+			,#{contents}
+			,SYSDATE
+		)
+	</insert>
+
+</mapper>

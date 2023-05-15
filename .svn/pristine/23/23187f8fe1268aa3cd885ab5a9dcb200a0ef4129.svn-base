@@ -1,0 +1,33 @@
+package com.board.dto;
+
+import java.sql.Date;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+@Getter
+@Setter
+public class BoardUpdateDto {
+
+	@JsonProperty("SEQ_BOARD")
+	private int seqBoard;
+	
+	@JsonProperty("ID")
+	private String id;
+	
+	@JsonProperty("TITLE")
+	private String title;
+	
+	@JsonProperty("CONTENTS")
+	private String contents;
+
+	@JsonProperty("REG_DATE")
+	private Date regDate;
+	
+	@JsonProperty("MOD_DATE")
+	private Date modDate;
+}

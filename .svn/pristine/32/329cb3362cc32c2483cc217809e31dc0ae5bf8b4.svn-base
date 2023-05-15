@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardInfoDao">
+
+   <select id="getReadBoardInfo" resultType="com.board.vo.BoardInfoVo" parameterType="hashMap">
+	<!-- boardInfoDao.BoardList.박혁진 -->
+	
+		SELECT * FROM
+		(SELECT ROWNUM AS rn, T.*
+		FROM (
+			SELECT
+				SEQ_BOARD
+				, CASE
+					WHEN
+		         		length(TITLE) > 5
+		         	THEN
+		         		substr(TITLE, 1, 5) || '...'
+		         	ELSE
+			         	TITLE
+				END AS TITLE
+		     
+	    , ID
+	    , to_char(REG_DATE, 'yyyy-mm-dd') as REG_DATE
+	    , to_char(MOD_DATE, 'yyyy-mm-dd') as MOD_DATE
+	  FROM YOUTUBE_JJH.BOARD_INFO
+	  WHERE 1=1
+  <if test="searchCondition != null and searchCondition != ''">
+  	<choose>
+    	<when test="searchCondition == 'title'">
+    		 AND TITLE LIKE '%${boardSearchWord}%'
+   		</when>
+    	<when test="searchCondition == 'id'">
+     		AND ID LIKE '%${boardSearchWord}%'
+    	</when>
+ 	 </choose>
+	</if>
+	ORDER BY SEQ_BOARD DESC) T
+	<![CDATA[
+		WHERE ROWNUM <= #{cri.page} * #{cri.perPageNum}
+	)
+		WHERE rn > (#{cri.page} - 1) * #{cri.perPageNum} 
+	]]>
+	 
+   </select>
+   
+   <select id="getBoardListCnt" resultType="Integer">
+      SELECT count(DISTINCT SEQ_BOARD)
+      from YOUTUBE_JJH.BOARD_INFO
+      WHERE 1=1
+       <if test = "searchCondition != null and searchCondition != '' ">
+		<choose>
+			 <when test= "searchCondition == 'title'">
+				AND TITLE LIKE '%${boardSearchWord}%'
+			</when> 
+			<when test= "searchCondition =='id'">
+				AND ID LIKE '%${boardSearchWord}%'
+			</when>
+		</choose>
+	</if>
+   </select>
+
+   <insert id="boardInsert" parameterType="map">
+      /*BoardInfoDao.boardInsert*/
+      INSERT INTO YOUTUBE_JJH.BOARD_INFO(
+         SEQ_BOARD
+         ,ID
+         ,TITLE
+         ,CONTENTS
+         ,REG_DATE
+         ,MOD_DATE
+      )VALUES(
+         YOUTUBE_JJH.seq_board.NEXTVAL
+         ,#{id}
+         ,#{title}
+         ,#{contents}
+         ,SYSDATE
+         ,SYSDATE
+      )
+	</insert>
+
+	
+	<!-- 게시글 상세보기 -->
+	<select id="getBoardDetail" resultType="com.board.vo.BoardInfoVo" parameterType="Integer">
+		/*BoardInfoDao.boardDetail*/
+		SELECT 
+			SEQ_BOARD as seqBoard
+			, ID
+			, TITLE
+			, CONTENTS
+			, to_char(REG_DATE, 'yyyy-mm-dd') as REG_DATE
+			, to_char(MOD_DATE, 'yyyy-mm-dd') as MOD_DATE
+		FROM YOUTUBE_JJH.BOARD_INFO
+		WHERE SEQ_BOARD = #{seqBoard}
+	</select>
+
+	<update id="boardUpdate" parameterType="com.board.dto.BoardInfoDto">
+		/*BoardInfoDao.boardUpdate*/
+		UPDATE
+			YOUTUBE_JJH.BOARD_INFO
+		SET
+			ID = #{id}
+			,TITLE = #{title}
+			, CONTENTS = #{contents}
+			, MOD_DATE = SYSDATE
+		WHERE
+			SEQ_BOARD = #{seqBoard}
+	</update>
+	
+	<delete id="boardDelete">
+		/*BoardInfoDao.boardDelete*/
+		DELETE 
+			YOUTUBE_JJH.BOARD_INFO
+		WHERE
+			SEQ_BOARD = #{seqBoard}
+	</delete>
+</mapper>

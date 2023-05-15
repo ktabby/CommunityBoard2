@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberLoginDao">
+
+	<resultMap type="com.board.dto.MemberLoginDto" id="member">
+		<result column="id" property="id"/>
+		<result column="password" property="password"/>
+		<result column="SEQ_MEMBER" property="seqMember"/>
+	</resultMap>
+	
+	<select id="loginCheck" parameterType="hashmap" resultMap="member">
+	/*loginCheck로그인*/
+	select *
+	from youtube_jjh.member_info
+	where id = #{id} and password = #{password}	
+  	
+  	</select>
+	
+	
+</mapper>
